@@ -13,11 +13,18 @@ MSGTEXT="<html>PostgreSQL <b>[${HOST}]</b> pg_profile ${REPORTNAME}<BR>
 - 1.9 supported since version 4.0<BR>- 1.8 supported since version 0.1.2</p><BR>See Attachment</html>"
 
 
+rm -f ${FILEREPORT}
 
 echo "[pg_profile]  Generate ${REPORTNAME} Started."
 PGPASSWORD=${PASSWORD} psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBNAME} -qAt -c "SELECT profile.report_daily();" --output="${FILEREPORT}"
 RC=$?
 echo "[pg_profile]  Generate ${REPORTNAME} Finished. RC=${RC}"
+
+if [[ ( ! -f ${FILEREPORT} ) || ( ! -s ${FILEREPORT} ) ]]; then
+RC=-1
+echo "[pg_profile]  Report is zero. RC=${RC}"
+exit ${RC}
+fi
 
 PGPASSWORD=${PASSWORD} psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBNAME} -xtA -c "SELECT pg_stat_statements_reset();" 2>&1 | sed -n '1p' | ts '[pg_profile]   '
 RC=$?
