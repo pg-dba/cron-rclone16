@@ -4,11 +4,11 @@
 FILEREPORT='/cronwork/pg_profile_interval.html'
 REPORTNAME="Interval Report"
 SUBJTEXT="PostgreSQL [${HOST}] pg_profile ${REPORTNAME}"
-SNAPS=$1
-SHIFT=$2
+SNAPS=$1	# например, 3 получасовых снапшота
+SHIFT=$2	# например, со смещением в 3 снапшота
 
-DTS=$(date -d "-$(( 10#$(date +%M) % 30 )) minutes - $SNAPS hours - $SHIFT hours" +%Y-%m-%dT%H:%M:00%z)
-DTF=$(date -d "-$(( 10#$(date +%M) % 30 )) minutes - $SHIFT hours + 1 minute" +%Y-%m-%dT%H:%M:00%z)
+DTS=$(date -d "-$(( 10#$(date +%M) % 30 )) minutes - $(($SNAPS*30)) minutes - $(($SHIFT*30)) minutes" +%Y-%m-%dT%H:%M:00%z)
+DTF=$(date -d "-$(( 10#$(date +%M) % 30 )) minutes - $(($SHIFT*30)) minutes + 1 minute" +%Y-%m-%dT%H:%M:00%z)
 
 MSGTEXT="<html>PostgreSQL <b>[${HOST}]</b> pg_profile ${REPORTNAME}<BR>
 <p>Report interval: ${DTS} - ${DTF}</p>
