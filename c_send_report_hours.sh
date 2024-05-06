@@ -4,15 +4,20 @@
 FILEREPORT='/cronwork/pg_profile_hours.html'
 REPORTNAME="Hours Report"
 SUBJTEXT="PostgreSQL [${HOST}] pg_profile ${REPORTNAME}"
+HOURS=$1
+SHIFT=0
+
+DTS=$(date -d "-$(( 10#$(date +%M) % 30 )) minutes - $HOURS hours - $SHIFT hours" +%Y-%m-%dT%H:%M:00%z)
+DTF=$(date -d "-$(( 10#$(date +%M) % 30 )) minutes - $SHIFT hours + 1 minute" +%Y-%m-%dT%H:%M:00%z)
+
 MSGTEXT="<html>PostgreSQL <b>[${HOST}]</b> pg_profile ${REPORTNAME}<BR>
+<p>Report interval: ${DTS} - ${DTF}</p>
 <p><a href=\"https://postgrespro.ru/docs/postgrespro/16/pgpro-pwr#PGPRO-PWR-SECTIONS-OF-A-REPORT\">Описание разделов отчёта</a>
 <BR><a href=\"https://github.com/zubkov-andrei/pg_profile/blob/master/doc/pg_profile.md#sections-of-a-report\">Description of report sections</a></p>
 <p>Supported versions<BR>PostgreSQL:<BR>
 - 16 supported since version 4.3<BR>- 15 supported since version 4.1<BR>- 14 supported since version 0.3.4<BR>- 13 supported since version 0.1.3<BR>
 - 12 supported since version 0.1.0<BR>- 10 supported until version 4.1<BR><BR>pg_stat_statements extension:<BR>- 1.10 supported since version 4.1<BR>
 - 1.9 supported since version 4.0<BR>- 1.8 supported since version 0.1.2</p><BR>See Attachment</html>"
-HOURS=$1
-
 
 echo "[pg_profile]  Generate ${REPORTNAME} Started."
 PGPASSWORD=${PASSWORD} psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBNAME} -qAt -c "SELECT profile.report_last_hours(${HOURS});" --output="${FILEREPORT}"
