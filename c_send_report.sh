@@ -7,11 +7,11 @@ SUBJTEXT="PostgreSQL [${HOST}] pg_profile ${REPORTNAME}"
 HOURS=24
 SHIFT=0
 
-DTS=$(date -d "-$(( 10#$(date +%M) % 30 )) minutes - $HOURS hours - $SHIFT hours" +%Y-%m-%dT%H:%M:00%z)
-DTF=$(date -d "-$(( 10#$(date +%M) % 30 )) minutes - $SHIFT hours + 1 minute" +%Y-%m-%dT%H:%M:00%z)
+DTS=$(date -d "-$(( 10#$(date +%M) % 30 )) minutes - $HOURS hours - $SHIFT hours" +%Y-%m-%d %H:%M:00%z)
+DTF=$(date -d "-$(( 10#$(date +%M) % 30 )) minutes - $SHIFT hours + 1 minute" +%Y-%m-%d %H:%M:00%z)
 
 MSGTEXT="<html>PostgreSQL <b>[${HOST}]</b> pg_profile ${REPORTNAME}<BR>
-<p>Report interval: ${DTS} - ${DTF}</p>
+<p>Report interval: <b>${DTS} - ${DTF}</b></p>
 <p><a href=\"https://postgrespro.ru/docs/postgrespro/16/pgpro-pwr#PGPRO-PWR-SECTIONS-OF-A-REPORT\">Описание разделов отчёта</a>
 <BR><a href=\"https://github.com/zubkov-andrei/pg_profile/blob/master/doc/pg_profile.md#sections-of-a-report\">Description of report sections</a></p>
 <p>Supported versions<BR>PostgreSQL:<BR>
