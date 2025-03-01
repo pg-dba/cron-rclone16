@@ -41,7 +41,7 @@ sed -i "s/relayhost =.*$/relayhost = $SMTPRELAY/" /etc/postfix/main.cf
 
 # start cron
 default_crontabs_dir=/etc/crontabs
-crond -l 7 -L /var/log/cron.log -c ${CRONTABS_DIR:-$default_crontabs_dir}
+crond -L /var/log/cron.log -c ${CRONTABS_DIR:-$default_crontabs_dir}
 
 # trap SIGINT and SIGTERM signals and gracefully exit
 trap "echo \"stopping cron\"; kill \$!; exit" SIGINT SIGTERM
