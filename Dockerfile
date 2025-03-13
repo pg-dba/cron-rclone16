@@ -1,4 +1,5 @@
 FROM rclone/rclone:latest
+# rclone/rclone FROM golang:alpine
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
