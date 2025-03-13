@@ -66,3 +66,28 @@ docker exec -it $(docker ps | grep ' sqldbapg/cron-rsync' | awk '{ print $1 }') 
 
 docker stop $(docker ps | grep ' sqldbapg/cron-rsync' | awk '{ print $1 }')
 </code></pre>
+
+<pre><code>
+# Ubuntu
+
+export DEBIAN_FRONTEND=noninteractive && apt-get -y install barman-cli awscli gosu && unset DEBIAN_FRONTEND
+
+
+# Alpine
+
+$ apk add --no-cache aws-cli
+
+$ apk add --no-cache gosu
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz
+ERROR: unable to select packages:
+  gosu (no such package):
+    required by: world[gosu]
+
+$ apk add --no-cache barman-cli
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz
+ERROR: unable to select packages:
+  barman-cli (no such package):
+    required by: world[barman-cli]
+</code></pre>
