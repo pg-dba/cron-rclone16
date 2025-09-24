@@ -21,4 +21,4 @@ PGPASSWORD=${PASSWORD} psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d pglogger -At
         WHERE pid in ( ${procs} ) \
 			AND backend_type = 'client backend' \
 			AND pid <> pg_backend_pid() \
-        ;" 2&>&1 | ts "[${premsg}] " ;
+        ;" 2>&1 | ts "[${premsg}] " ;
