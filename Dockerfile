@@ -23,6 +23,7 @@ RUN set -ex && \
     apk add --no-cache postfix && \
     apk add --no-cache mutt && \
     apk add --no-cache zabbix-utils && \
+# https://ftp.postgresql.org/pub/pgadmin/pgagent/pgAgent-4.2.1-Source.tar.gz
 # making logging pipe
     mkfifo -m 0666 /var/log/cron.log && \
     ln -s /var/log/cron.log /var/log/crond.log && \
@@ -37,6 +38,9 @@ RUN wget --quiet https://dl.min.io/client/mc/release/linux-amd64/mc && chmod 700
 COPY main.cf /etc/postfix/main.cf
 COPY start-cron /usr/sbin
 RUN chmod 744 /usr/sbin/start-cron
+COPY pgagent /usr/bin
+RUN chmod 744 /usr/bin/pgagent
+COPY lib* /usr/lib
 
 # scripts for cron
 COPY *.sh /etc/cron.d/
